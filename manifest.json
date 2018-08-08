@@ -1,12 +1,17 @@
 {
-    "author":"Tran Nogc Quy",
+    "author": "Tran Nogc Quy",
     "name": "OALD word lookup extension",
     "version": "1.0",
     "description": "Double click to lookup the word in a new tab!",
     "permissions": [
         "activeTab",
-        "tabs"
+        "tabs",
+        "storage"
     ],
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": false
+    },
     "content_scripts": [
         {
             "matches": [
