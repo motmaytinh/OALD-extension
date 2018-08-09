@@ -8,6 +8,15 @@
         "tabs",
         "storage"
     ],
+    "commands": {
+        "toggle-feature": {
+          "suggested_key": {
+            "default": "Alt+M",
+            "mac": "Command+Q"
+          },
+          "description": "Toggle search box"
+        }
+    },
     "options_ui": {
         "page": "options.html",
         "open_in_tab": false

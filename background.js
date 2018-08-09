@@ -4,15 +4,24 @@ const url = "https://www.oxfordlearnersdictionaries.com/search/english/direct/?q
 
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
-    chrome.storage.local.get(['open'], function (result) {
-      if (result.open == "tab") {
-        lookUpInNewTab(request.word);
-      } else {
-        lookUpInNewWindow(request.word);
-      };
-    });
+    // console.log(request.word);
+    if (isNaN(request.word)) {
+      chrome.storage.local.get(['open'], function (result) {
+        if (result.open == "tab") {
+          lookUpInNewTab(request.word);
+        } else {
+          lookUpInNewWindow(request.word);
+        };
+      });
+    }
   }
 );
+
+chrome.commands.onCommand.addListener(function (command) {
+  if (command == "toggle-feature") {
+    lookUpInNewTab("word");
+  }
+});
 
 function lookUpInNewTab(word) {
   chrome.tabs.create({ "url": url + word });
