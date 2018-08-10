@@ -5,7 +5,7 @@ const url = "https://www.oxfordlearnersdictionaries.com/search/english/direct/?q
 chrome.runtime.onMessage.addListener(
   function (request, sender, sendResponse) {
     // console.log(request.word);
-    if (isNaN(request.word)) {
+    if (!hasNumber(request.word)) {
       chrome.storage.local.get(['open'], function (result) {
         if (result.open == "tab") {
           lookUpInNewTab(request.word);
@@ -22,6 +22,10 @@ chrome.commands.onCommand.addListener(function (command) {
     lookUpInNewTab("word");
   }
 });
+
+function hasNumber(myString) {
+  return /\d/.test(myString);
+}
 
 function lookUpInNewTab(word) {
   chrome.tabs.create({ "url": url + word });
