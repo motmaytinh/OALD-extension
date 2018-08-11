@@ -1,0 +1,46 @@
+#sampleDialog{
+    height:600px;
+    width:600px;
+    background:white;
+    border:2px solid black;
+    position:fixed;
+    overflow:hidden;
+    z-index:99;
+}
+
+#sampleDialog #title{
+    background-color: black;
+    font-weight:bold;
+    color:white;
+    height:20px;
+    padding:2px;
+}
+
+#sampleDialog #content{
+    padding:2px;
+}
+
+#sampleDialog #title:hover{
+    cursor:move;
+    background:gray;
+}
+
+#sampleDialog #close{
+    cursor:pointer;
+    position:absolute;
+    color:white;
+    font-weight:bold;
+    top:0;
+    z-index:100;
+}
+
+#overlay{
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    position:fixed;
+    background:gray;
+    opacity:0.5;
+    z-index:98;
+}

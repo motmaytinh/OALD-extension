@@ -28,6 +28,9 @@
             ],
             "js": [
                 "contentscript.js"
+            ],
+            "css": [
+                "dialog.css"
             ]
         }
     ],
