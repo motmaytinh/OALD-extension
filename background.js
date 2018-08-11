@@ -34,24 +34,22 @@ function lookUpInNewTab(word) {
 
 function lookUpInNewWindow(word) {
   if (word) {
-    try {
+    if (current_query_popup != null) {
       chrome.windows.update(current_query_popup, { focused: true },
         function (window) {
-          if (window == null) {
+          if (chrome.runtime.lastError) {
             create_popup(word);
-          }
-          else {
+          } else {
             update_popup(word);
           }
         });
-    } catch (error) {
+    } else {
       create_popup(word);
     }
   }
 }
 
 function update_popup(word) {
-  console.log("update");
   chrome.tabs.update(current_query_tab, { url: url + word }, function (tab) { })
 }
 
