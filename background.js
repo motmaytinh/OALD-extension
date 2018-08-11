@@ -1,6 +1,6 @@
 'use strict';
 
-const url = "https://www.oxfordlearnersdictionaries.com/search/english/direct/?q="
+const URL = "https://www.oxfordlearnersdictionaries.com/search/english/direct/?q="
 var current_query_popup;
 var current_query_tab;
 
@@ -9,9 +9,9 @@ chrome.runtime.onMessage.addListener(
     if (!hasNumber(request.word)) {
       chrome.storage.local.get(['open'], function (result) {
         if (result.open == "tab") {
-          lookUpInNewTab(request.word);
+          lookUpInNewTab(URL + request.word);
         } else {
-          lookUpInNewWindow(request.word);
+          lookUpInNewWindow(URL + request.word);
         };
       });
     }
@@ -20,7 +20,7 @@ chrome.runtime.onMessage.addListener(
 
 chrome.commands.onCommand.addListener(function (command) {
   if (command == "toggle-feature") {
-    lookUpInNewTab("word");
+    lookUpInNewWindow("https://www.oxfordlearnersdictionaries.com/");
   }
 });
 
@@ -28,38 +28,36 @@ function hasNumber(myString) {
   return /\d/.test(myString);
 }
 
-function lookUpInNewTab(word) {
-  chrome.tabs.create({ "url": url + word, alwaysOnTop: true });
+function lookUpInNewTab(url) {
+  chrome.tabs.create({ "url": url, alwaysOnTop: true });
 }
 
-function lookUpInNewWindow(word) {
-  if (word) {
-    if (current_query_popup != null) {
-      chrome.windows.update(current_query_popup, { focused: true },
-        function (window) {
-          if (chrome.runtime.lastError) {
-            create_popup(word);
-          } else {
-            update_popup(word);
-          }
-        });
-    } else {
-      create_popup(word);
-    }
+function lookUpInNewWindow(url) {
+  if (current_query_popup != null) {
+    chrome.windows.update(current_query_popup, { focused: true },
+      function (window) {
+        if (chrome.runtime.lastError) {
+          create_popup(url);
+        } else {
+          update_popup(url);
+        }
+      });
+  } else {
+    create_popup(url);
   }
 }
 
-function update_popup(word) {
-  chrome.tabs.update(current_query_tab, { url: url + word }, function (tab) { })
+function update_popup(url) {
+  chrome.tabs.update(current_query_tab, { url: url }, function (tab) { })
 }
 
-function create_popup(word) {
+function create_popup(url) {
   var w = 550;
   var h = 450;
   var left = (screen.width / 2) - (w / 2);
   var top = (screen.height / 2) - (h / 2);
   chrome.windows.create({
-    'url': url + word,
+    'url': url,
     'type': 'popup',
     'width': w,
     'height': h,
