@@ -26,6 +26,9 @@
             "matches": [
                 "<all_urls>"
             ],
+            "exclude_globs": [
+                "https://www.oxfordlearnersdictionaries.com/*"
+            ],
             "js": [
                 "contentscript.js"
             ]
